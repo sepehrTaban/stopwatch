@@ -35,8 +35,12 @@ startBtn.addEventListener('touchstart', ()=> {
 pauseBtn.addEventListener('click', ()=> {
     pauseResume();
 })
+pauseBtn.addEventListener('touchstart', ()=>{
+    pauseBtn.classList.add('touched');
+})
 pauseBtn.addEventListener('touchend', ()=> {
     pauseResume();
+    pauseBtn.classList.remove('touched');
 })
 /*************************************/
 function start() {

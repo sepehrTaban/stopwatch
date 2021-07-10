@@ -11,6 +11,11 @@
     height: 100%;
     font-family: tahoma;
     overflow: hidden;
+    -webkit-user-select: none; 
+    -webkit-touch-callout: none; 
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none;
   }
   .pause-resume,
   .lap-reset {
@@ -168,9 +173,15 @@
       footer button{
           font-size: 1.5rem;
       }
-      footer button:hover::before {
-        transform: scaleX(0);
-        transform-origin: left;
-      }    
+    }
+    @media  screen and (max-width:900px){
+        footer button:hover::before {
+          transform: scaleX(0);
+          transform-origin: left;
+        }
+        footer button.touched::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }   
   }
   
