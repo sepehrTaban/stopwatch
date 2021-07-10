@@ -4,8 +4,8 @@
 const stopWatchContainer = document.querySelector('.watch-container');
 const mainMinSecSpan = document.querySelector('.min-sec');
 const mainMillSpan = document.querySelector('.mill');
-const lapMinuteSeconds = document.querySelector('.lap-min-sec');
-const lapMill = document.querySelector('.lap-mill');
+const lapMinSecSpan = document.querySelector('.lap-min-sec');
+const lapMillSpan = document.querySelector('.lap-mill');
 const lapTable = document.querySelector('.laps-table');
 const startBtn = document.querySelector('.start');
 const pauseBtn = document.querySelector('.pause-resume');
@@ -22,25 +22,31 @@ let lapStop;
 let lapPaused;
 let lapCount = 0;
 
+let movedUp = false;
+
 
 
 /*############################################*/
-startBtn.addEventListener('click', ()=> {
+startBtn.addEventListener('click', () => {
     start();
 })
-startBtn.addEventListener('touchstart', ()=> {
+startBtn.addEventListener('touchstart', () => {
     start();
 })
 /**************************************/
-pauseBtn.addEventListener('click', ()=> {
+pauseBtn.addEventListener('click', () => {
     pauseResume();
 })
-pauseBtn.addEventListener('touchstart', ()=>{
+pauseBtn.addEventListener('touchstart', () => {
     pauseBtn.classList.add('touched');
 })
-pauseBtn.addEventListener('touchend', ()=> {
+pauseBtn.addEventListener('touchend', () => {
     pauseResume();
     pauseBtn.classList.remove('touched');
+})
+/**************************************/
+lapBtn.addEventListener('click', () => {
+    lapReset();
 })
 /*************************************/
 function start() {
@@ -50,7 +56,7 @@ function start() {
         addClass(pauseBtn, 'visible');
         addClass(lapBtn, 'visible');
     }, 500);
-    
+
     startTime = new Date().getTime();
     setStopWatchInterval();
 }
@@ -66,8 +72,20 @@ function pauseResume() {
     pauseBtn.textContent = 'Pause';
     pausedTime = new Date().getTime() - stopTime;
     startTime += pausedTime;
-    setStopWatchInterval(); 
+    setStopWatchInterval();
 
+
+}
+/*************************************/
+function lapReset() {
+    if (lapBtn.textContent === 'Lap') {
+        if (lapInterval) clearInterval(lapInterval);
+
+        lapStart = new Date().getTime();
+        setStopWatchInterval('lap');
+
+        updateLapTable();
+    }
 
 }
 /*************************************/
@@ -90,13 +108,56 @@ function updateWatch(startingTime, minSecSpan, millSpan) {
     minSecSpan.textContent = `${displayMins}:${displaySecs}`;
     millSpan.textContent = `:${displayMillSecs}`;
 }
+/**************************************/
+function updateLapTable() {
+    let mainText = mainMinSecSpan.textContent + mainMillSpan.textContent;
+    let lapText = lapMinSecSpan.textContent + lapMillSpan.textContent;
+    lapCount++;
+
+    let tr = document.createElement('tr');
+    let td1 = document.createElement('td');
+    let td2 = document.createElement('td');
+    let td3 = document.createElement('td');
+
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+
+    td1.textContent = (lapCount > 9) ? lapCount : `0${lapCount}`;
+    td2.textContent = mainText;
+    td3.textContent = (lapCount > 1) ? lapText : mainText;
+
+    if (!movedUp) {
+        addClass(stopWatchContainer, 'move-up');
+
+        setTimeout(() => {
+            lapTable.insertBefore(tr, lapTable.firstChild);
+            setTimeout(() => {
+                addClass(tr, 'shown');
+            }, 200);
+
+        }, 300);
+
+        movedUp = true;
+        return;
+    }
+
+    lapTable.insertBefore(tr, lapTable.firstChild);
+    setTimeout(() => {
+        addClass(tr, 'shown');
+    }, 200);
+
+}
 /*************************************/
 function addClass(element, targetclass) {
     element.classList.add(targetclass);
 }
 /*************************************/
-function setStopWatchInterval(intervalName){
-    if(intervalName === 'lap'){
+function setStopWatchInterval(intervalName) {
+    if (intervalName === 'lap') {
+        lapInterval = setInterval(() => {
+            updateWatch(lapStart, lapMinSecSpan, lapMillSpan);
+        }, 10);
         return;
     }
     mainInterval = setInterval(() => {
