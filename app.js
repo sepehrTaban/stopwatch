@@ -35,7 +35,7 @@ startBtn.addEventListener('touchstart', ()=> {
 pauseBtn.addEventListener('click', ()=> {
     pauseResume();
 })
-pauseBtn.addEventListener('touchstart', ()=> {
+pauseBtn.addEventListener('touchend', ()=> {
     pauseResume();
 })
 /*************************************/
