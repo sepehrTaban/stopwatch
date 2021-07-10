@@ -1,1 +1,38 @@
-f
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h2>SIMPLE STOP WATCH</h2>
+    </header>
+
+    <section class="stopwatch">
+        <div class="watch-container">
+            <p><span class="min-sec">00:00</span><span class="mill">:00</span></p>
+            <p><span class="lap-min-sec"></span><span class="lap-mill"></span></p>
+        </div>
+        <div class="table-container">
+            <table class="laps-table"></table>
+        </div>
+    </section>
+
+
+    <footer>
+        <button class="start">Start</button>
+        <button class="pause-resume">Pause</button>
+        <button class="lap-reset">Lap</button>
+    </footer>
+
+    
+    <script src="app.js"></script>
+</body>
+
+</html>
