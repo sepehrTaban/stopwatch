@@ -34,17 +34,23 @@ startBtn.addEventListener('click', () => {
     start();
 
     if (isLandscape) {
-        lapBtn.classList.add('hovarable');
-        pauseBtn.classList.add('hovarable');
+        addClass(lapBtn, 'hovarable')
+        addClass(pauseBtn, 'hovarable')
+        
+    } else {
+        removeClass(lapBtn, 'hovarable')
+        removeClass(pauseBtn, 'hovarable')
+        
     }
 })
 /**************************************/
 pauseBtn.addEventListener('click', () => {
     pauseResume();
     if(!isLandscape){
-        pauseBtn.classList.add('touched');
+        addClass(pauseBtn, 'touched');
+        
         setTimeout(() => {
-            pauseBtn.classList.remove('touched');
+            removeClass(pauseBtn, 'touched');
         }, 300);
 
     }
@@ -53,9 +59,10 @@ pauseBtn.addEventListener('click', () => {
 lapBtn.addEventListener('click', () => {
     lapReset();
     if(!isLandscape){
-        lapBtn.classList.add('touched');
+        addClass(lapBtn, 'touched');
+        
         setTimeout(() => {
-            lapBtn.classList.remove('touched');
+            removeClass(lapBtn, 'touched');
         }, 300);
 
     }

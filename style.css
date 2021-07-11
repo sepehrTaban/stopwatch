@@ -28,6 +28,9 @@
     transform: translateY(0);
     transition: transform 0.5s;
   }
+  footer button.start{
+    background: #ffd369;
+  }
   
   header {
     width: 100%;
