@@ -37,13 +37,13 @@ startBtn.addEventListener('touchstart', () => {
 pauseBtn.addEventListener('click', () => {
     pauseResume();
 })
-pauseBtn.addEventListener('touchstart', () => {
+/*pauseBtn.addEventListener('touchstart', () => {
     pauseBtn.classList.add('touched');
 })
 pauseBtn.addEventListener('touchend', () => {
     pauseResume();
     pauseBtn.classList.remove('touched');
-})
+})*/
 /**************************************/
 lapBtn.addEventListener('click', () => {
     lapReset();
@@ -65,13 +65,25 @@ function pauseResume() {
     if (pauseBtn.textContent === 'Pause') {
 
         pauseBtn.textContent = 'Resume';
+        lapBtn.textContent = 'Reset';
         stopTime = new Date().getTime();
         clearInterval(mainInterval);
+        if(lapCount){
+            lapStop = new Date().getTime();
+            clearInterval(lapInterval);
+        }
         return;
     }
     pauseBtn.textContent = 'Pause';
+    lapBtn.textContent = 'Lap';
     pausedTime = new Date().getTime() - stopTime;
     startTime += pausedTime;
+    
+    if(lapCount) {
+        lapPaused = new Date().getTime() - lapStop;
+        lapStart += lapPaused;
+        setStopWatchInterval('lap');
+    }
     setStopWatchInterval();
 
 
