@@ -89,7 +89,11 @@
     transform: scaleX(0);
     transform-origin: right;
   }
-  footer button:hover::before {
+  footer button.hovarable:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  footer button.touched::before {
     transform: scaleX(1);
     transform-origin: left;
   }
@@ -173,14 +177,14 @@
   
   /**********************************************/
   @media  screen and (max-width:900px){
-      footer button:hover::before {
+      /*footer button:hover::before {
         transform: scaleX(0);
         transform-origin: left;
       }
       footer button.touched::before {
           transform: scaleX(1);
           transform-origin: left;
-      }
+      }*/
       .table-container {
         max-height: 300px;
       }   

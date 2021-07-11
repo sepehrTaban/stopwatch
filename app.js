@@ -23,20 +23,42 @@ let lapPaused;
 let lapCount = 0;
 
 let movedUp = false;
-
+let isLandscape = window.innerWidth > window.innerHeight;
+window.addEventListener('resize', () =>{
+    isLandscape = window.innerWidth > window.innerHeight;
+})
 
 
 /*############################################*/
 startBtn.addEventListener('click', () => {
     start();
+
+    if (isLandscape) {
+        lapBtn.classList.add('hovarable');
+        pauseBtn.classList.add('hovarable');
+    }
 })
 /**************************************/
 pauseBtn.addEventListener('click', () => {
     pauseResume();
+    if(!isLandscape){
+        pauseBtn.classList.add('touched');
+        setTimeout(() => {
+            pauseBtn.classList.remove('touched');
+        }, 300);
+
+    }
 })
 /**************************************/
 lapBtn.addEventListener('click', () => {
     lapReset();
+    if(!isLandscape){
+        lapBtn.classList.add('touched');
+        setTimeout(() => {
+            lapBtn.classList.remove('touched');
+        }, 300);
+
+    }
 })
 /*************************************/
 function start() {
@@ -158,17 +180,17 @@ function reset() {
     lapCount = 0;
     while (lapTable.firstChild)
         lapTable.removeChild(lapTable.firstChild);
-    
+
     removeClass(pauseBtn, 'visible');
     removeClass(lapBtn, 'visible');
     pauseBtn.textContent = 'Pause';
     lapBtn.textContent = 'Lap';
     mainMinSecSpan.textContent = '00:00';
     mainMillSpan.textContent = ':00';
-    
+
     lapMinSecSpan.textContent = '';
     lapMillSpan.textContent = '';
-    
+
     setTimeout(() => {
         removeClass(stopWatchContainer, 'move-up');
         removeClass(startBtn, 'unvisible');
