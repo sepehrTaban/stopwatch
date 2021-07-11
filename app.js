@@ -30,20 +30,10 @@ let movedUp = false;
 startBtn.addEventListener('click', () => {
     start();
 })
-startBtn.addEventListener('touchstart', () => {
-    start();
-})
 /**************************************/
 pauseBtn.addEventListener('click', () => {
     pauseResume();
 })
-/*pauseBtn.addEventListener('touchstart', () => {
-    pauseBtn.classList.add('touched');
-})
-pauseBtn.addEventListener('touchend', () => {
-    pauseResume();
-    pauseBtn.classList.remove('touched');
-})*/
 /**************************************/
 lapBtn.addEventListener('click', () => {
     lapReset();
@@ -68,18 +58,19 @@ function pauseResume() {
         lapBtn.textContent = 'Reset';
         stopTime = new Date().getTime();
         clearInterval(mainInterval);
-        if(lapCount){
+        if (lapCount) {
             lapStop = new Date().getTime();
             clearInterval(lapInterval);
         }
         return;
     }
+    //if pauseBtn.textContent === 'Resume'
     pauseBtn.textContent = 'Pause';
     lapBtn.textContent = 'Lap';
     pausedTime = new Date().getTime() - stopTime;
     startTime += pausedTime;
-    
-    if(lapCount) {
+
+    if (lapCount) {
         lapPaused = new Date().getTime() - lapStop;
         lapStart += lapPaused;
         setStopWatchInterval('lap');
@@ -97,7 +88,10 @@ function lapReset() {
         setStopWatchInterval('lap');
 
         updateLapTable();
+        return;
     }
+    //if lapBtn.textContent === 'Reset'
+    reset();
 
 }
 /*************************************/
@@ -160,9 +154,35 @@ function updateLapTable() {
     }, 200);
 
 }
+function reset() {
+    lapCount = 0;
+    while (lapTable.firstChild)
+        lapTable.removeChild(lapTable.firstChild);
+    
+    removeClass(pauseBtn, 'visible');
+    removeClass(lapBtn, 'visible');
+    pauseBtn.textContent = 'Pause';
+    lapBtn.textContent = 'Lap';
+    mainMinSecSpan.textContent = '00:00';
+    mainMillSpan.textContent = ':00';
+    
+    lapMinSecSpan.textContent = '';
+    lapMillSpan.textContent = '';
+    
+    setTimeout(() => {
+        removeClass(stopWatchContainer, 'move-up');
+        removeClass(startBtn, 'unvisible');
+    }, 300);
+    movedUp = false;
+
+
+}
 /*************************************/
 function addClass(element, targetclass) {
     element.classList.add(targetclass);
+}
+function removeClass(element, targetclass) {
+    element.classList.remove(targetclass);
 }
 /*************************************/
 function setStopWatchInterval(intervalName) {
