@@ -7,6 +7,7 @@ const mainMillSpan = document.querySelector('.mill');
 const lapMinSecSpan = document.querySelector('.lap-min-sec');
 const lapMillSpan = document.querySelector('.lap-mill');
 const lapTable = document.querySelector('.laps-table');
+const tableContainer = document.querySelector('.table-container');
 const startBtn = document.querySelector('.start');
 const pauseBtn = document.querySelector('.pause-resume');
 const lapBtn = document.querySelector('.lap-reset');
@@ -24,12 +25,16 @@ let lapCount = 0;
 
 let movedUp = false;
 let isLandscape = window.innerWidth > window.innerHeight;
+
+
+/*#################### Event listeners ###################*/
+/*#################### Event listeners ###################*/
+/*#################### Event listeners ###################*/
+/*************************************/
 window.addEventListener('resize', () =>{
     isLandscape = window.innerWidth > window.innerHeight;
 })
-
-
-/*############################################*/
+/*************************************/
 startBtn.addEventListener('click', () => {
     start();
 
@@ -66,8 +71,11 @@ lapBtn.addEventListener('click', () => {
         }, 300);
 
     }
+
 })
-/*************************************/
+/*#################### main functions ###################*/
+/*#################### main functions ###################*/
+/*#################### main functions ###################*/
 function start() {
 
     addClass(startBtn, 'unvisible');
@@ -110,6 +118,7 @@ function pauseResume() {
 }
 /*************************************/
 function lapReset() {
+    
     if (lapBtn.textContent === 'Lap') {
         if (lapInterval) clearInterval(lapInterval);
 
@@ -117,6 +126,7 @@ function lapReset() {
         setStopWatchInterval('lap');
 
         updateLapTable();
+        tableContainer.scrollTop = 0;
         return;
     }
     //if lapBtn.textContent === 'Reset'
